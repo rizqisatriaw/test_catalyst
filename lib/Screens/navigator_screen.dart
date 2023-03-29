@@ -32,15 +32,19 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: ColorsConst.darkGreyColor,
-          unselectedLabelStyle: TextStyle(color: ColorsConst.primaryColor),
           currentIndex: navigatorProvider.currentIndex,
+          selectedItemColor: ColorsConst.primaryColor,
+          unselectedItemColor: Colors.grey,
           onTap: (index) {
             navigatorProvider.currentIndex = index;
           },
           items: contentNavigators
               .map(
                 (e) => BottomNavigationBarItem(
-                    icon: e.image, label: e.title, activeIcon: e.active),
+                  icon: e.image,
+                  label: e.title,
+                  activeIcon: e.active,
+                ),
               )
               .toList()),
     );

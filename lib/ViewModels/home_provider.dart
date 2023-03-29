@@ -1,7 +1,9 @@
+import 'dart:core';
 import 'dart:developer';
 
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:test_catalyst/Constant/assets_const.dart';
 import 'package:test_catalyst/Models/get_games_response.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +13,8 @@ class HomeProvider with ChangeNotifier {
   final CarouselController controller = CarouselController();
   TextEditingController searchController = TextEditingController();
   List<GetGames>? data;
+  List<GetGames>? allData;
+
   bool isLoading = false;
 
   void setLoading() {
@@ -30,7 +34,9 @@ class HomeProvider with ChangeNotifier {
   ];
 
   Future<void> fetchGames() async {
-    setLoading();
+    // setLoading();
+    isLoading = true;
+    // notifyListeners();
     const peopleListAPIUrl =
         'https://www.cheapshark.com/api/1.0/deals?storeID=1&upperPrice=15';
 
@@ -38,11 +44,20 @@ class HomeProvider with ChangeNotifier {
     if (response.statusCode == 200) {
       log(response.body);
       data = getGamesFromJson(response.body);
-      setLoading();
+      allData = data;
+      isLoading = false;
+      // notifyListeners();
       return;
     } else {
-      setLoading();
+      isLoading = false;
+      // notifyListeners();
       throw Exception('Failed to load games from API');
     }
+  }
+
+  void onSearchTextChanged(String text) {
+    data =
+        allData!.where((e) => e.title!.toLowerCase().contains(text)).toList();
+    notifyListeners();
   }
 }

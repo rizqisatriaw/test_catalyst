@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:test_catalyst/Constant/colors_const.dart';
 import 'package:test_catalyst/Models/get_games_response.dart';
+import 'package:test_catalyst/Screens/detail_screen.dart';
 import 'package:test_catalyst/ViewModels/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -110,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderRadius: BorderRadius.circular(18),
                       ),
                       child: TextField(
+                        onChanged: (x) => reader.onSearchTextChanged(x),
                         controller: reader.searchController,
                         style: GoogleFonts.poppins(
                           textStyle: TextStyle(
@@ -160,78 +162,91 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget cardShort(GetGames? data) {
-    return Center(
-      child: Container(
-        alignment: Alignment.centerLeft,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          color: ColorsConst.darkGreyColor,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-              child: Image.network(
-                data?.thumb ?? '',
-                height: 120,
-                width: MediaQuery.of(context).size.width,
-                alignment: Alignment.center,
-                fit: BoxFit.cover,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              data: data!,
+            ),
+          ),
+        );
+      },
+      child: Center(
+        child: Container(
+          alignment: Alignment.centerLeft,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            color: ColorsConst.darkGreyColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
+                child: Image.network(
+                  data?.thumb ?? '',
+                  height: 120,
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.center,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    data?.title ?? '',
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: ColorsConst.textColor,
-                          fontSize: 16,
-                        ),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    data?.salePrice ?? 'Rp. 0',
-                    textAlign: TextAlign.left,
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: ColorsConst.primaryColor,
-                          fontSize: 16,
-                        ),
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    data?.steamRatingText ?? '',
-                    textAlign: TextAlign.left,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.poppins(
-                        textStyle: TextStyle(
-                          color: ColorsConst.primaryColor,
-                          fontSize: 12,
-                        ),
-                        fontWeight: FontWeight.normal),
-                  ),
-                ],
+              const SizedBox(
+                height: 10,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-          ],
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data?.title ?? '',
+                      textAlign: TextAlign.left,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: ColorsConst.textColor,
+                            fontSize: 16,
+                          ),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      data?.salePrice ?? 'Rp. 0',
+                      textAlign: TextAlign.left,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: ColorsConst.primaryColor,
+                            fontSize: 16,
+                          ),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      data?.steamRatingText ?? '',
+                      textAlign: TextAlign.left,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.poppins(
+                          textStyle: TextStyle(
+                            color: ColorsConst.primaryColor,
+                            fontSize: 12,
+                          ),
+                          fontWeight: FontWeight.normal),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     );

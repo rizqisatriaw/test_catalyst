@@ -12,13 +12,13 @@ class SplashProvider with ChangeNotifier {
   Future<void> isAlreadyLogin(BuildContext context) async {
     currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      moveToHome(context);
+      moveToNavigator(context);
     } else {
       moveToOnBoard(context);
     }
   }
 
-  void moveToHome(BuildContext context) {
+  void moveToNavigator(BuildContext context) {
     Timer(
       const Duration(seconds: 3),
       () => Navigator.pushReplacement(

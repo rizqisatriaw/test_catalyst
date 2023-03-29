@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 import 'package:test_catalyst/Constant/colors_const.dart';
 import 'package:test_catalyst/Models/get_games_response.dart';
+import 'package:test_catalyst/Screens/detail_screen.dart';
 import 'package:test_catalyst/ViewModels/home_provider.dart';
 
 class ListScreen extends StatefulWidget {
@@ -33,7 +34,7 @@ class _ListScreenState extends State<ListScreen> {
                     margin:
                         const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                     alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     width: MediaQuery.of(context).size.width,
                     height: 50,
                     decoration: BoxDecoration(
@@ -41,6 +42,7 @@ class _ListScreenState extends State<ListScreen> {
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: TextField(
+                      onChanged: (x) => watcher.onSearchTextChanged(x),
                       controller: reader.searchController,
                       style: GoogleFonts.poppins(
                         textStyle: TextStyle(
@@ -60,111 +62,55 @@ class _ListScreenState extends State<ListScreen> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemBuilder: (_, i) => cardLong(watcher.data?[i]),
-                  itemCount: 8,
+                  itemCount: watcher.data?.length ?? 0,
                 ),
               ),
             ],
           ),
         ),
       ),
-      // child: Stack(
-      //   children: [
-      //     Scaffold(
-      //       backgroundColor: ColorsConst.secondaryColor,
-      //       body: ListView(
-      //         children: [
-      //           StickyHeader(
-      //             header: Container(
-      //               width: MediaQuery.of(context).size.width,
-      //               color: ColorsConst.secondaryColor,
-      //               margin: const EdgeInsets.only(bottom: 30),
-      //               child: Container(
-      //                 margin: const EdgeInsets.symmetric(
-      //                     vertical: 10, horizontal: 5),
-      //                 alignment: Alignment.center,
-      //                 padding: const EdgeInsets.symmetric(horizontal: 20),
-      //                 width: MediaQuery.of(context).size.width,
-      //                 height: MediaQuery.of(context).size.width / 9,
-      //                 decoration: BoxDecoration(
-      //                   color: ColorsConst.primaryColor,
-      //                   borderRadius: BorderRadius.circular(18),
-      //                 ),
-      //                 child: TextField(
-      //                   controller: reader.searchController,
-      //                   style: GoogleFonts.poppins(
-      //                     textStyle: TextStyle(
-      //                       color: ColorsConst.textColor,
-      //                       fontSize: 16,
-      //                     ),
-      //                     fontWeight: FontWeight.normal,
-      //                   ),
-      //                   decoration: InputDecoration.collapsed(
-      //                     hintStyle: TextStyle(color: ColorsConst.textColor),
-      //                     hintText: "Search",
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             content: GridView.builder(
-      //               physics: const NeverScrollableScrollPhysics(),
-      //               shrinkWrap: true,
-      //               itemBuilder: (_, i) => cardLong(watcher.data?[i]),
-      //               itemCount: watcher.data?.length ?? 0,
-      //               gridDelegate:
-      //                   const SliverGridDelegateWithMaxCrossAxisExtent(
-      //                 maxCrossAxisExtent: 200,
-      //                 childAspectRatio: 3 / 3.6,
-      //                 crossAxisSpacing: 20,
-      //                 mainAxisSpacing: 20,
-      //               ),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     ),
-      //     if (watcher.isLoading)
-      //       Container(
-      //         width: MediaQuery.of(context).size.width,
-      //         height: MediaQuery.of(context).size.height,
-      //         color: Colors.black.withOpacity(0.3),
-      //         child: Center(
-      //           child: CircularProgressIndicator(
-      //             color: ColorsConst.primaryColor,
-      //             value: 30,
-      //           ),
-      //         ),
-      //       )
-      //   ],
-      // ),
     );
   }
 
   Widget cardLong(GetGames? data) {
-    return Container(
-      alignment: Alignment.center,
-      margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
-      // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        color: ColorsConst.darkGreyColor,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.network(
-                data?.thumb ?? '',
-                height: 100,
-                alignment: Alignment.center,
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              data: data!,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        alignment: Alignment.center,
+        margin: const EdgeInsets.only(top: 20, left: 10, right: 10),
+        // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: ColorsConst.darkGreyColor,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                child: Image.network(
+                  data?.thumb ?? '',
+                  height: 60,
+                  width: 100,
+                  alignment: Alignment.center,
+                ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Column(
+            ),
+            Expanded(
+              flex: 3,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -206,24 +152,12 @@ class _ListScreenState extends State<ListScreen> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
-          ),
-          // InkWell(
-          //   onTap: () {
-          //     people.saved == "true" ? _showMyDialog(people) : addSaved(people);
-          //   },
-          //   child: Image.asset(
-          //     people.saved == "true"
-          //         ? "assets/images/like1.png"
-          //         : "assets/images/unlike.png",
-          //     width: MediaQuery.of(context).size.width / 5,
-          //     height: MediaQuery.of(context).size.width / 15,
-          //   ),
-          // ),
-        ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+          ],
+        ),
       ),
     );
   }

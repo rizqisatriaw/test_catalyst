@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:test_catalyst/Constant/colors_const.dart';
 import 'package:test_catalyst/ViewModels/profile_provider.dart';
 
@@ -19,7 +20,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ProfileProvider profileProvider = ProfileProvider();
+    ProfileProvider reader = context.read<ProfileProvider>();
+    ProfileProvider watcher = context.watch<ProfileProvider>();
     currentUser = FirebaseAuth.instance.currentUser;
     displayName = currentUser?.displayName ?? '';
     email = currentUser?.email ?? '';
@@ -103,21 +105,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             InkWell(
-              // onTap: () async {
-              //   const AlertDialog(
-              //     title: Text('Logout'),
-              //     content: Text('Are you sure?'),
-              //     actions: [
-              //       TextButton(
-              //         onPressed: () {},
-              //         child: Text(
-              //           'Yes',
-              //           style: TextStyle(color: ColorsConst.textColor),
-              //         ),
-              //       )
-              //     ],
-              //   );
-              // },
+              onTap: () async {
+                ProfileProvider().signOut(context);
+              },
               child: Container(
                 margin: const EdgeInsets.only(top: 50),
                 width: MediaQuery.of(context).size.width - 200,
