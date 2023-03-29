@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 import 'package:test_catalyst/Constant/colors_const.dart';
 import 'package:test_catalyst/Models/get_games_response.dart';
 import 'package:test_catalyst/ViewModels/home_provider.dart';
@@ -24,46 +25,117 @@ class _ListScreenState extends State<ListScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: ColorsConst.secondaryColor,
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+              StickyHeader(
+                header: Container(
                   width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: ColorsConst.primaryColor,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: TextField(
-                    controller: reader.searchController,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                        color: ColorsConst.textColor,
-                        fontSize: 16,
-                      ),
-                      fontWeight: FontWeight.normal,
+                  color: ColorsConst.secondaryColor,
+                  child: Container(
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    width: MediaQuery.of(context).size.width,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: ColorsConst.primaryColor,
+                      borderRadius: BorderRadius.circular(18),
                     ),
-                    decoration: InputDecoration.collapsed(
-                      hintStyle: TextStyle(color: ColorsConst.textColor),
-                      hintText: "Search",
+                    child: TextField(
+                      controller: reader.searchController,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyle(
+                          color: ColorsConst.textColor,
+                          fontSize: 16,
+                        ),
+                        fontWeight: FontWeight.normal,
+                      ),
+                      decoration: InputDecoration.collapsed(
+                        hintStyle: TextStyle(color: ColorsConst.textColor),
+                        hintText: "Search",
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemBuilder: (_, i) => cardLong(watcher.data?[i]),
-                itemCount: 8,
+                content: ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemBuilder: (_, i) => cardLong(watcher.data?[i]),
+                  itemCount: 8,
+                ),
               ),
             ],
           ),
         ),
       ),
+      // child: Stack(
+      //   children: [
+      //     Scaffold(
+      //       backgroundColor: ColorsConst.secondaryColor,
+      //       body: ListView(
+      //         children: [
+      //           StickyHeader(
+      //             header: Container(
+      //               width: MediaQuery.of(context).size.width,
+      //               color: ColorsConst.secondaryColor,
+      //               margin: const EdgeInsets.only(bottom: 30),
+      //               child: Container(
+      //                 margin: const EdgeInsets.symmetric(
+      //                     vertical: 10, horizontal: 5),
+      //                 alignment: Alignment.center,
+      //                 padding: const EdgeInsets.symmetric(horizontal: 20),
+      //                 width: MediaQuery.of(context).size.width,
+      //                 height: MediaQuery.of(context).size.width / 9,
+      //                 decoration: BoxDecoration(
+      //                   color: ColorsConst.primaryColor,
+      //                   borderRadius: BorderRadius.circular(18),
+      //                 ),
+      //                 child: TextField(
+      //                   controller: reader.searchController,
+      //                   style: GoogleFonts.poppins(
+      //                     textStyle: TextStyle(
+      //                       color: ColorsConst.textColor,
+      //                       fontSize: 16,
+      //                     ),
+      //                     fontWeight: FontWeight.normal,
+      //                   ),
+      //                   decoration: InputDecoration.collapsed(
+      //                     hintStyle: TextStyle(color: ColorsConst.textColor),
+      //                     hintText: "Search",
+      //                   ),
+      //                 ),
+      //               ),
+      //             ),
+      //             content: GridView.builder(
+      //               physics: const NeverScrollableScrollPhysics(),
+      //               shrinkWrap: true,
+      //               itemBuilder: (_, i) => cardLong(watcher.data?[i]),
+      //               itemCount: watcher.data?.length ?? 0,
+      //               gridDelegate:
+      //                   const SliverGridDelegateWithMaxCrossAxisExtent(
+      //                 maxCrossAxisExtent: 200,
+      //                 childAspectRatio: 3 / 3.6,
+      //                 crossAxisSpacing: 20,
+      //                 mainAxisSpacing: 20,
+      //               ),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //     if (watcher.isLoading)
+      //       Container(
+      //         width: MediaQuery.of(context).size.width,
+      //         height: MediaQuery.of(context).size.height,
+      //         color: Colors.black.withOpacity(0.3),
+      //         child: Center(
+      //           child: CircularProgressIndicator(
+      //             color: ColorsConst.primaryColor,
+      //             value: 30,
+      //           ),
+      //         ),
+      //       )
+      //   ],
+      // ),
     );
   }
 
@@ -84,7 +156,7 @@ class _ListScreenState extends State<ListScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(
+              Image.network(
                 data?.thumb ?? '',
                 height: 100,
                 alignment: Alignment.center,

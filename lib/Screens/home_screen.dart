@@ -163,7 +163,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Center(
       child: Container(
         alignment: Alignment.centerLeft,
-        // padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: ColorsConst.darkGreyColor,

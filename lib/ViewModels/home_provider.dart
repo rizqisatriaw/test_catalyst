@@ -24,7 +24,6 @@ class HomeProvider with ChangeNotifier {
   }
 
   List<String> imgList = [
-    AssetsConst.banner1Image,
     AssetsConst.banner2Image,
     AssetsConst.banner3Image,
     AssetsConst.banner4Image,

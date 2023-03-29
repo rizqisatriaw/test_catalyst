@@ -32,6 +32,7 @@ class _NavigatorScreenState extends State<NavigatorScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: ColorsConst.darkGreyColor,
+          unselectedLabelStyle: TextStyle(color: ColorsConst.primaryColor),
           currentIndex: navigatorProvider.currentIndex,
           onTap: (index) {
             navigatorProvider.currentIndex = index;

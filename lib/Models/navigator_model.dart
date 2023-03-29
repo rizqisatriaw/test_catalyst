@@ -21,10 +21,11 @@ List<NavigatorModel> contentNavigators = [
       AssetsConst.homeSvg,
     ),
     title: 'Home',
-    // Text('Home', style: TextStyle(color: ColorsConst.inActive)).toString(),
+    // title:
+    //     Text('Home', style: TextStyle(color: ColorsConst.inActive)).toString(),
     active: SvgPicture.asset(
       AssetsConst.home1Svg,
-      width: 28,
+      width: 24,
     ),
   ),
   NavigatorModel(
@@ -43,6 +44,6 @@ List<NavigatorModel> contentNavigators = [
       title: 'Profile',
       active: SvgPicture.asset(
         AssetsConst.profile1Svg,
-        width: 24,
+        width: 18,
       )),
 ];
