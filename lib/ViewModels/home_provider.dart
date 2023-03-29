@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:test_catalyst/Constant/assets_const.dart';
 import 'package:test_catalyst/Models/get_games_response.dart';
 import 'package:http/http.dart' as http;
@@ -50,7 +49,6 @@ class HomeProvider with ChangeNotifier {
       return;
     } else {
       isLoading = false;
-      // notifyListeners();
       throw Exception('Failed to load games from API');
     }
   }

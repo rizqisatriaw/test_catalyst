@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test_catalyst/Screens/onboard_screen.dart';
 import 'package:test_catalyst/Screens/splash_screen.dart';
-import 'package:test_catalyst/ViewModels/detail_provider.dart';
 import 'package:test_catalyst/ViewModels/home_provider.dart';
 import 'package:test_catalyst/ViewModels/login_provider.dart';
 import 'package:test_catalyst/ViewModels/navigator_provider.dart';
@@ -34,9 +32,6 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => LoginProvider(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => DetailProvider(),
         ),
       ],
       child: const MyApp(),

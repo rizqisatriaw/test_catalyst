@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:test_catalyst/Constant/colors_const.dart';
 import 'package:test_catalyst/ViewModels/profile_provider.dart';
 
@@ -20,8 +19,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ProfileProvider reader = context.read<ProfileProvider>();
-    ProfileProvider watcher = context.watch<ProfileProvider>();
     currentUser = FirebaseAuth.instance.currentUser;
     displayName = currentUser?.displayName ?? '';
     email = currentUser?.email ?? '';
